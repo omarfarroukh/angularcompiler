@@ -50,8 +50,9 @@ public class SymbolTable {
                 System.out.printf(format,
                         row.getName() != null ? row.getName() : "",
                         row.getValue() != null ? row.getValue() : "",
-                        row.getType() != null ? row.getType() : "",
-                        row.getScope() != null ? row.getScope() : "");
+                        row.getType() != null ? row.getType() : ""
+//                       , row.getScope() != null ? row.getScope() : ""
+                );
             }
         }
         System.out.print(separator);
