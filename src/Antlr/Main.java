@@ -21,7 +21,6 @@ public class Main {
         AngLexer lexer = new AngLexer(charStream);
         CommonTokenStream token = new CommonTokenStream((TokenSource) lexer);
         AngParser parser = new AngParser(token);
-gello
         ParseTree tree = parser.app();
          //this for AST
         BaseVisitor visitor = new BaseVisitor();

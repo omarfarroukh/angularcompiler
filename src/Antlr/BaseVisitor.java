@@ -35,7 +35,7 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitComponentConfig(AngParser.ComponentConfigContext ctx) {
-
+    symbolTable.enterScope();
         String componentscope = "Component: " ;
 //        scopeStack.push(componentscope);
         Selector selector = (Selector) visit(ctx.selector());
@@ -58,13 +58,14 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
                 value
 //               componentscope
         );
-
+        symbolTable.exitScope();
 //         scopeStack.pop();
         return componentConfig;
     }
 
     @Override
     public ASTNode visitDirectiveConfig(AngParser.DirectiveConfigContext ctx) {
+        symbolTable.enterScope();
         Selector selector = (Selector) visit(ctx.selector());
 
         String directivescope = "derective: ";
@@ -76,6 +77,7 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
 //                
         );
         DirectiveConfig directiveConfig = new DirectiveConfig(selector);
+        symbolTable.exitScope();
 //        scopeStack.pop();
         return directiveConfig;
 
@@ -83,7 +85,7 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitInjectableConfig(AngParser.InjectableConfigContext ctx) {
-
+    symbolTable.enterScope();
         String providedIn;
         if (ctx.PROVIDED_IN_ROOT() != null) {
             providedIn = ctx.PROVIDED_IN_ROOT().getText();
@@ -106,6 +108,7 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
                 "providedIn"
 //                
         );
+        symbolTable.exitScope();
 //        scopeStack.pop();
         return new InjectableConfig(providedIn);
     }
@@ -263,7 +266,7 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
 
         Exports exports = new Exports();
         String className = ctx.ID(0).getText();
-
+        symbolTable.enterScope();
         List<decorater> decoraters = new ArrayList<>();
         for (AngParser.DecoraterContext decoraterContext : ctx.decorater()) {
             if (decoraterContext != null) {
@@ -304,14 +307,14 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
 //        // String scope = ;
         String name = ids.isEmpty() ? "UnnamedClass" : ids.get(0);
         symbolTable.add(name, "class", "class");
-
+        symbolTable.exitScope();
         return exports;
     }
 
     @Override
     public classBody visitClassBody(AngParser.ClassBodyContext ctx) {
         classBody body = new classBody();
-
+symbolTable.enterScope();
         List<Variable> variables = new ArrayList<>();
         for (AngParser.VariableContext variableContext : ctx.variable()) {
             if (variableContext != null) {
@@ -350,7 +353,7 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
               value.toString()
 //              scope
       );
-
+    symbolTable.exitScope();
         return body;
 
         }
@@ -690,6 +693,7 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
     @Override
     public constructor visitConstructor(AngParser.ConstructorContext ctx) {
       constructor constructor = new constructor();
+      symbolTable.enterScope();
         List<vv> vvs = new ArrayList<>();
         for (AngParser.VvContext vvContext : ctx.vv()) {
             if (vvContext != null) {
@@ -714,6 +718,7 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
                 valueStr.toString()
                 
         );
+        symbolTable.exitScope();
         return constructor;
     }
 
@@ -729,6 +734,7 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
     @Override
     public function visitFunction(AngParser.FunctionContext ctx) {
        function fun = new function();
+       symbolTable.enterScope();
        if (ctx.ID() != null) {
            fun.setName(ctx.ID().getText());
        }
@@ -786,7 +792,7 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
                 fun.getName(),
                 "function",
               "void");
-
+    symbolTable.exitScope();
 //scopeStack.pop();
         return fun;
     }
@@ -1751,6 +1757,7 @@ if (dot.getId() != null && !dot.getId().isEmpty()){
     public interfaceCode visitInterfaceCode(AngParser.InterfaceCodeContext ctx) {
        interfaceCode interfaceCode = new interfaceCode();
          sy name = (sy) visit(ctx.sy());
+         symbolTable.enterScope();
        interfaceCode.setName(name);
 
         String interfacescope = name != null ? name.toString() : "anonymous_interface";
@@ -1773,6 +1780,7 @@ if (dot.getId() != null && !dot.getId().isEmpty()){
         }
         interfaceCode.setMembers(vvs);
         symbolTable.add(interfacescope,"interface","Interface definition");
+        symbolTable.exitScope();
         return interfaceCode;
     }
 //this for print AST
