@@ -13,13 +13,13 @@ public class SymbolTable {
     public void setRows(List<Row> rows) {
         this.rows = rows;
     }
-    public void add(String name ,String type, String value,String scope) {
-        if (type == null || value == null ||name == null ||scope == null || type.isEmpty() || value.isEmpty()||name.isEmpty() || scope.isEmpty()) {
+    public void add(String name ,String type, String value) {
+        if (type == null || value == null ||name == null  || type.isEmpty() || value.isEmpty()||name.isEmpty() ) {
             throw new IllegalArgumentException(" name, Scope ,Type and value cannot be null or empty.");
         }
         for (Row row : rows) {
-            if (row.getName().equals(name)&&row.getScope().equals(scope) &&row.getType().equals(type) && row.getValue().equals(value)) {
-                System.out.println("Duplicate entry :name"+ name +"Duplicate entry: Type = " + type + ", Value = " + value + "Duplicate entry scope :" + scope);
+            if ( row.getType().equals(type) && row.getValue().equals(value)) {
+                System.out.println("Duplicate entry :name"+ name +"Duplicate entry: Type = " + type + ", Value = " + value );
                 return;
             }
         }
@@ -27,7 +27,6 @@ public class SymbolTable {
         row.setName(name);
         row.setType(type);
         row.setValue(value);
-        row.setScope(scope);
         rows.add(row);
     }
 

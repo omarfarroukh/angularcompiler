@@ -19,16 +19,16 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
     }
 
     SymbolTable symbolTable = new SymbolTable();
-    private Deque<String> scopeStack = new ArrayDeque<>();
+//    private Deque<String> scopeStack = new ArrayDeque<>();
 
-     private String getCurrentScope(){
-         return scopeStack.isEmpty() ? "global" :scopeStack.peek();
-     }
-    private String getEnclosingScope() {
-        Iterator<String> it = scopeStack.iterator();
-        it.next();
-        return it.hasNext() ? it.next() : "global";
-    }
+//     private String getCurrentScope(){
+//         return scopeStack.isEmpty() ? "global" :scopeStack.peek();
+//     }
+//    private String getEnclosingScope() {
+//        Iterator<String> it = scopeStack.iterator();
+//        it.next();
+//        return it.hasNext() ? it.next() : "global";
+//    }
     public SymbolTable getSymbolTable(){
         return  symbolTable;
     }
@@ -68,15 +68,15 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
         Selector selector = (Selector) visit(ctx.selector());
 
         String directiveScope = "derective: ";
-        scopeStack.push(directiveScope);
+//        scopeStack.push(directiveScope);
         symbolTable.add(
                "Directive",
                 "DirectiveConfig",
                 "Directive",
-                getCurrentScope()
+//                getCurrentScope()
         );
         DirectiveConfig directiveConfig = new DirectiveConfig(selector);
-        scopeStack.pop();
+//        scopeStack.pop();
         return directiveConfig;
 
     }
@@ -98,15 +98,15 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
             providedIn = "unknown";
         }
         String scope = "injectable: " +providedIn;
-        scopeStack.push(scope);
+//        scopeStack.push(scope);
 
         symbolTable.add(
                 providedIn,
                 "InjectableConfig",
                 "providedIn",
-                getCurrentScope()
+//                getCurrentScope()
         );
-        scopeStack.pop();
+//        scopeStack.pop();
         return new InjectableConfig(providedIn);
     }
 
@@ -123,7 +123,7 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
                     "template",
                     "Template",
                     Value,
-                    getCurrentScope()
+//                    getCurrentScope()
             );
         }
 
@@ -145,7 +145,7 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
               "Styleurls",
               "Styleurls",
               String.join(",",values),
-              getCurrentScope()
+//              getCurrentScope()
       );
       return styleUrls;
     }
@@ -162,7 +162,7 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
                    "templateUrl",
                    "templateUrl",
                           value,
-                         getCurrentScope()
+//                         getCurrentScope()
            );
        }
        return templateUrl;
@@ -175,7 +175,7 @@ public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
             String raw = ctx.SingleLineString().getText();
             String value = raw.substring(1, raw.length() - 1);
             selector.setValue(value);
-            String currentScope = getCurrentScope();
+//            String currentScope = getCurrentScope();
             symbolTable.add(
                     "selector",
                     "selector",
