@@ -1,14 +1,12 @@
 package AST;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashMap;
+import java.util.*;
 import java.util.Map;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SymbolTable {
     private final Deque<Map<String, Row>> scopeStack = new ArrayDeque<>();
+    private final Map<String, Row> PrintMap = new HashMap<>() ;
+
 
     public SymbolTable() {
         // Start with global scope
@@ -36,7 +34,6 @@ public class SymbolTable {
         }
 
         Map<String, Row> currentScope = scopeStack.peek();
-
         // Check for duplicate in current scope only
         if (currentScope.containsKey(name)) {
             System.out.println("Duplicate entry in current scope: name = " + name);
@@ -47,6 +44,8 @@ public class SymbolTable {
         row.setName(name);
         row.setType(type);
         row.setValue(value);
+        row.setScope_level(scopeStack.size());
+        PrintMap.put(name,row);
         currentScope.put(name, row);
     }
 
@@ -81,7 +80,11 @@ public class SymbolTable {
             return;
         }
 
-        // Formatting strings
+        int nameWidth = 20;
+        int valueWidth = 30;
+        int typeWidth = 20;
+        int scopeWidth = 10;
+
         String format = "| %-20s | %-30s | %-20s | %-10s |\n";
         String separator = "+----------------------+--------------------------------+----------------------+------------+\n";
         String headerFormat = "| %-20s | %-30s | %-20s | %-10s |\n";
@@ -90,18 +93,78 @@ public class SymbolTable {
         System.out.printf(headerFormat, "Symbol Name", "Symbol Value", "Symbol Type", "Scope Level");
         System.out.print(separator);
 
-        // Print from innermost to outermost scope (scope level decreases as we go down the stack)
-        int currentScopeLevel = scopeStack.size() - 1;
-        for (Map<String, Row> scope : scopeStack) {
-            for (Row row : scope.values()) {
-                System.out.printf(format,
-                        row.getName() != null ? row.getName() : "null",
-                        row.getValue() != null ? row.getValue() : "null",
-                        row.getType() != null ? row.getType() : "null",
-                        currentScopeLevel);
+        for (Row row : PrintMap.values()) {
+            String name = clean(row.getName(), nameWidth);
+            String value = clean(row.getValue(), valueWidth);
+            String type = clean(row.getType(), typeWidth);
+            String scope = String.valueOf(row.getScope_level());
+
+            List<String> nameLines = splitToLines(name, nameWidth);
+            List<String> valueLines = splitToLines(value, valueWidth);
+            List<String> typeLines = splitToLines(type, typeWidth);
+            List<String> scopeLines = splitToLines(scope, scopeWidth);
+
+            int maxLines = Collections.max(Arrays.asList(
+                    nameLines.size(), valueLines.size(), typeLines.size(), scopeLines.size()
+            ));
+
+            for (int i = 0; i < maxLines; i++) {
+                String namePart = i < nameLines.size() ? nameLines.get(i) : "";
+                String valuePart = i < valueLines.size() ? valueLines.get(i) : "";
+                String typePart = i < typeLines.size() ? typeLines.get(i) : "";
+                String scopePart = i < scopeLines.size() ? scopeLines.get(i) : "";
+
+                System.out.printf(format, namePart, valuePart, typePart, scopePart);
             }
-            currentScopeLevel--;
         }
+
         System.out.print(separator);
+
     }
+
+    public static List<String> splitToLines(String text, int width) {
+        List<String> lines = new ArrayList<>();
+        for (int i = 0; i < text.length(); i += width) {
+            lines.add(text.substring(i, Math.min(i + width, text.length())));
+        }
+        return lines;
+    }
+
+    private static String clean(String input, int maxWidth) {
+        if (input == null) return "null";
+        return input.replaceAll("\n", " ").replaceAll("\\s+", " ").trim();
+    }
+
+
+//    public void print() {
+//        if (scopeStack.isEmpty()) {
+//            System.out.println("Symbol table is empty.");
+//            return;
+//        }
+//
+//        // Formatting strings
+//        String format = "| %-20s | %-30s | %-20s | %-10s |\n";
+//        String separator = "+----------------------+--------------------------------+----------------------+------------+\n";
+//        String headerFormat = "| %-20s | %-30s | %-20s | %-10s |\n";
+//
+//        System.out.print(separator);
+//        System.out.printf(headerFormat, "Symbol Name", "Symbol Value", "Symbol Type", "Scope Level");
+//        System.out.print(separator);
+//
+//        // Print from innermost to outermost scope (scope level decreases as we go down the stack)
+//        int currentScopeLevel = scopeStack.size() - 1;
+////        int currentScopeLevel = 3;
+//
+//        for (Map<String, Row> scope : scopeStack) {
+//            for (Row row : scope.values()) {
+//                System.out.printf(format,
+//                        row.getName() != null ? row.getName() : "null",
+//                        row.getValue() != null ? row.getValue() : "null",
+//                        row.getType() != null ? row.getType() : "null",
+//                        currentScopeLevel);
+//            }
+//            currentScopeLevel--;
+//        }
+//        System.out.print(separator);
+//    }
 }

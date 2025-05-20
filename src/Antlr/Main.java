@@ -12,10 +12,10 @@ public class Main {
 
         // Important : to print Symbol table comment visit method in BaseVisitor
         // String source = "App-test.txt";
-        //  String source = "test1.txt";
-        String source = "test2.txt";
-       // String source = "test3.txt";
-        //String source = "test4.txt";
+          String source = "test1.txt";
+//        String source = "test2.txt";
+//        String source = "test3.txt";
+//        String source = "test4.txt";
         CharStream charStream = fromFileName(source);
 
         AngLexer lexer = new AngLexer(charStream);

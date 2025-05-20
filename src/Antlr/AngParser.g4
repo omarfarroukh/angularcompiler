@@ -64,7 +64,7 @@ htmlVar :OPEN_BRACE? ID CLOSE_BRACE?;
 
 htmlinside : sy? (htmlID | htmlClass)* ;
 htmlID : (MULTI? (ID) EQUAL OPEN_BRACE? value2 CLOSE_BRACE?) ;
-htmlClass : ((CLASS_NAME) EQUAL OPEN_BRACE? value2 CLOSE_BRACE?) ;
+htmlClass : ((SingleLineString) EQUAL OPEN_BRACE? value2 CLOSE_BRACE?) ; // here class => SingleLineString
 sy : ID ;
 
 value2 : (onClick | attributeValue | ID DOT ID ) ;

@@ -4,6 +4,15 @@ public class Row {
     String name;
     String type;
     String value;
+    Integer scope_level = 1;
+
+    public Integer getScope_level() {
+        return scope_level;
+    }
+
+    public void setScope_level(Integer scope_level) {
+        this.scope_level = scope_level;
+    }
 
     public String getType() {
         return type;
@@ -28,9 +37,9 @@ public class Row {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return String.format("%-20s\t%-30s\t%-20s\t%-20s", name, value, type);
-    }
+//    @Override
+//    public String toString() {
+//        return String.format("%-20s\t%-30s\t%-20s\t%-20s", name, value, type);
+//    }
 
 }
