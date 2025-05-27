@@ -570,25 +570,23 @@ symbolTable.enterScope();
     @Override
     public Property visitProperty(AngParser.PropertyContext ctx) {
         String key = ctx.ID().getText();
-        Object value = visit(ctx.valueOfProperty()); // تغيير من value() إلى valueOfProperty()
-        return new Property("Property",key, value);
+        ValueOfProperty value = visitValueOfProperty(ctx.valueOfProperty());
+        return new Property("Property", key, value);
     }
     @Override
-    public Object visitValueOfProperty(AngParser.ValueOfPropertyContext ctx) {
+    public ValueOfProperty visitValueOfProperty(AngParser.ValueOfPropertyContext ctx) {
         if (ctx.SingleLineString() != null) {
-            // إزالة علامات الاقتباس إذا كانت موجودة
             String text = ctx.SingleLineString().getText();
-            return text.startsWith("\"") && text.endsWith("\"") ?
+            String value = text.startsWith("\"") && text.endsWith("\"") ?
                     text.substring(1, text.length() - 1) : text;
+            return new ValueOfProperty();
         }
-        else if (ctx.NUMBER() != null) {
-            try {
-                return Integer.parseInt(ctx.NUMBER().getText());
-            } catch (NumberFormatException e) {
-                throw new RuntimeException("Invalid number format: " + ctx.NUMBER().getText(), e);
-            }
+        else if(ctx.NUMBER() != null) {
+                int num = Integer.parseInt(ctx.NUMBER().getText());
+                return new ValueOfProperty();
+
         }
-        return null;
+        return new ValueOfProperty();
     }
     ////////////////////////////// end new
 

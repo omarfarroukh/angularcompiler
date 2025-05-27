@@ -323,10 +323,9 @@ public interface AngParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProperty(AngParser.PropertyContext ctx);
 	/**
-     * Visit a parse tree produced by {@link AngParser#valueOfProperty}.
-     *
-     * @param ctx the parse tree
-     * @return the visitor result
-     */
-	Object visitValueOfProperty(AngParser.ValueOfPropertyContext ctx);
+	 * Visit a parse tree produced by {@link AngParser#valueOfProperty}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitValueOfProperty(AngParser.ValueOfPropertyContext ctx);
 }

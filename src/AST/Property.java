@@ -1,29 +1,26 @@
 package AST;
 
-public class Property extends ASTNode{
-    public String key;
-    public Object value;
+public class Property extends ASTNode {
+    private String key;
+    private ValueOfProperty value;
 
-    public Property(String type, String key, Object value) {
+    public Property(String type, String key, ValueOfProperty value) {
         super(type);
         this.key = key;
         this.value = value;
     }
 
+    // Getters and Setters
     public String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public Object getValue() {
+    public ValueOfProperty getValue() {
         return value;
     }
 
-    public void setValue(Object value) {
-        this.value = value;
+    @Override
+    public String toString() {
+        return key + ": " + value;
     }
-
 }

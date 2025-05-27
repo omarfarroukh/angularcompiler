@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         // Important : to print Symbol table comment visit method in BaseVisitor
-         String source = "App-test.txt";
+         String source = "tt.txt";
 //          String source = "test1.txt";
 //        String source = "test2.txt";
 //        String source = "test3.txt";

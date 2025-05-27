@@ -1,0 +1,8 @@
+export class AppComponent {
+  products = [
+    { id: 1, name: "Apple", price: 10, image: "./1.png" },
+    { id: 2, name: "Banana", price: 15, image: "./2.png" },
+    { id: 3, name: "Orange", price: 20, image: "./3.png" },
+    { id: 4, name: "Tomato", price: 5, image: "./4.png" }
+  ];
+  }

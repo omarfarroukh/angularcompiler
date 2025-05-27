@@ -377,10 +377,10 @@ public class AngParserBaseVisitor<T> extends AbstractParseTreeVisitor<T> impleme
 	 */
 	@Override public T visitProperty(AngParser.PropertyContext ctx) { return visitChildren(ctx); }
 	/**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation returns the result of calling
-     * {@link #visitChildren} on {@code ctx}.</p>
-     */
-	@Override public Object visitValueOfProperty(AngParser.ValueOfPropertyContext ctx) { return visitChildren(ctx); }
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitValueOfProperty(AngParser.ValueOfPropertyContext ctx) { return visitChildren(ctx); }
 }
