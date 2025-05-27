@@ -5,12 +5,9 @@ import AST.Map;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import javax.xml.transform.sax.SAXResult;
-import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.teeing;
 import static java.util.stream.Collectors.toList;
 public class BaseVisitor extends AngParserBaseVisitor<ASTNode> {
 
@@ -508,34 +505,92 @@ symbolTable.enterScope();
         }
         subValue.setCssCode(cssCodes);
 
+        // إضافة دعم لـ objectInArray
+        List<ObjectInArray> objectsInArray = new ArrayList<>();
 
-        // Build a string representation of the subValue
+        for (AngParser.ObjectInArrayContext objCtx : ctx.objectInArray()) {
+            if (objCtx != null) {
+                objectsInArray.add((ObjectInArray) visit(objCtx));
+            }
+        }
+        subValue.setObjectInArray(objectsInArray);
+
+        // تحديث السجل في جدول الرموز
         StringBuilder value = new StringBuilder();
-        if (subValue.getString() != null) {
-            value.append("string: ").append(subValue.getString());
-        }
-        if (subValue.getId() != null) {
-            if (value.length() > 0) value.append(", ");
-            value.append("id: ").append(subValue.getId());
-        }
-        if (subValue.getDecimal() != null) {
-            if (value.length() > 0) value.append(", ");
-            value.append("decimal: ").append(subValue.getDecimal());
-        }
-        if (!cssCodes.isEmpty()) {
-            if (value.length() > 0) value.append(", ");
-            value.append("cssCode: ").append(cssCodes);
-        }
+        if (subValue.getString() != null) value.append("string: ").append(subValue.getString());
+        if (subValue.getId() != null) value.append(", id: ").append(subValue.getId());
+        if (subValue.getDecimal() != null) value.append(", decimal: ").append(subValue.getDecimal());
+        if (!cssCodes.isEmpty()) value.append(", cssCode: ").append(cssCodes.size()).append(" items");
+        if (!objectsInArray.isEmpty()) value.append(", objectsInArray: ").append(objectsInArray.size()).append(" items");
 
-       symbolTable.add(
-               "subValue",
-               "value",
-               value.toString()
-               
-       );
+        symbolTable.add(
+                "subValue",
+                "complex",
+                value.toString()
+        );
+
         return subValue;
+//        // Build a string representation of the subValue
+//        StringBuilder value = new StringBuilder();
+//        if (subValue.getString() != null) {
+//            value.append("string: ").append(subValue.getString());
+//        }
+//        if (subValue.getId() != null) {
+//            if (value.length() > 0) value.append(", ");
+//            value.append("id: ").append(subValue.getId());
+//        }
+//        if (subValue.getDecimal() != null) {
+//            if (value.length() > 0) value.append(", ");
+//            value.append("decimal: ").append(subValue.getDecimal());
+//        }
+//        if (!cssCodes.isEmpty()) {
+//            if (value.length() > 0) value.append(", ");
+//            value.append("cssCode: ").append(cssCodes);
+//        }
+
+//       symbolTable.add(
+//               "subValue",
+//               "value",
+//               value.toString()
+//
+//       );
+//        return subValue;
 
     }
+
+    /////////////////////////////// new
+    @Override
+    public ObjectInArray visitObjectInArray(AngParser.ObjectInArrayContext ctx) {
+        List<Property> properties = new ArrayList<>();
+        for (AngParser.PropertyContext propCtx : ctx.property()) {
+            properties.add((Property) visit(propCtx));
+        }
+        return new ObjectInArray("ObjectInArray", properties);
+    }
+    @Override
+    public Property visitProperty(AngParser.PropertyContext ctx) {
+        String key = ctx.ID().getText();
+        Object value = visit(ctx.valueOfProperty()); // تغيير من value() إلى valueOfProperty()
+        return new Property("Property",key, value);
+    }
+    @Override
+    public Object visitValueOfProperty(AngParser.ValueOfPropertyContext ctx) {
+        if (ctx.SingleLineString() != null) {
+            // إزالة علامات الاقتباس إذا كانت موجودة
+            String text = ctx.SingleLineString().getText();
+            return text.startsWith("\"") && text.endsWith("\"") ?
+                    text.substring(1, text.length() - 1) : text;
+        }
+        else if (ctx.NUMBER() != null) {
+            try {
+                return Integer.parseInt(ctx.NUMBER().getText());
+            } catch (NumberFormatException e) {
+                throw new RuntimeException("Invalid number format: " + ctx.NUMBER().getText(), e);
+            }
+        }
+        return null;
+    }
+    ////////////////////////////// end new
 
     @Override
     public Variable visitVariable(AngParser.VariableContext ctx) {
@@ -1328,7 +1383,7 @@ if (dot.getId() != null && !dot.getId().isEmpty()){
     @Override
     public htmlClass visitHtmlClass(AngParser.HtmlClassContext ctx) {
       htmlClass htmlClass = new htmlClass();
-      htmlClass.setClassName(ctx.CLASS_NAME().getText());
+      htmlClass.setClassName(ctx.getClass().getName());
       htmlClass.setValue2((Value2) visit(ctx.value2()));
 
         StringBuilder value = new StringBuilder();

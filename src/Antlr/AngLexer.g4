@@ -41,9 +41,12 @@ B_C : '`';
 PX : 'px';
 HUN : '%';
 
+
+
 EXPENSES:'expenses';
 ENUM:'enum';
 COMPONENT : 'Component';
+COMMONMODULE : 'CommonModule';
 DIRECTIVE:'Directive';
 CONST: 'const';
 FUNCTION: 'function';
@@ -80,7 +83,7 @@ INTERFACE: 'interface';
 DATATYPE_:'string' |'number' | 'boolean' | 'any' | 'void' ;
 SIGNAL : 'Signal' ;
 RESOURCE : 'Resource';
-//IMPORTS : 'imports';
+IMPORTS : 'imports';
 IMPLEMENT  : 'implements ';
 EXTEND : 'extend';
 //TEMPLATE : 'template';
@@ -125,6 +128,10 @@ fragment WORD: LETTER | '_' | DIGIT  ;
 fragment LETTER : 'a' .. 'z' | 'A' .. 'Z'  ;
 fragment DIGIT : '0' .. '9' ;
 SingleLineString : StringDQ | StringSQ | 'r\'' (~('\'' | '\n' | '\r'))* '\'' | 'r"' (~('"' | '\n' | '\r'))* '"' ;
+//SingleLineString
+//    : '"' ( '\\' [\\"] | ~[\\"\r\n] )* '"'  // Double-quoted strings
+//    | '\'' ( '\\' [\\'] | ~[\\'\r\n] )* '\'' // Single-quoted strings
+//    ;
 MultiLineString : '"""' StringContentTDQ*? '"""' | '\'\'\'' StringContentTSQ*? '\'\'\'' | 'r"""' (~'"' | '"' ~'"' | '""' ~'"')* '"""' | 'r\'\'\'' (~'\'' | '\'' ~'\'' | '\'\'' ~'\'')* '\'\'\'' ;
 fragment StringDQ : '"' StringContentDQ*? '"' ;
 fragment StringContentDQ : ~('\\' | '"' | '\n' | '\r' | '$')

@@ -3,7 +3,7 @@ parser grammar AngParser;
 options { tokenVocab=AngLexer; }
 
 app : (importR | variable | function | exports | enum | interfaceCode)*  ;
-importR: IMPORT OPEN_BRACE (((ID) COMMA?)* SIGNAL? COMMA? ((ID) COMMA?)*) CLOSE_BRACE FROM SingleLineString SIME;
+importR: IMPORT OPEN_BRACE (((ID | COMPONENT | COMMONMODULE) COMMA?)* SIGNAL? COMMA? ((ID) COMMA?)*) CLOSE_BRACE FROM SingleLineString SIME;
 
 exports : decorater* EXPORT CLASS ID ((IMPLEMENT | EXTEND) ID)? OPEN_BRACE classBody CLOSE_BRACE;
 
@@ -14,21 +14,23 @@ decorater
   | AT DIRECTIVE OPEN_PAREN directiveConfig CLOSE_PAREN
   | AT INJECTABLE OPEN_PAREN injectableConfig CLOSE_PAREN
   ;
-componentConfig: OPEN_BRACE selector COMMA (templateUrl | template) (COMMA styleUrls)? CLOSE_BRACE ;
+componentConfig: OPEN_BRACE selector COMMA imports? COMMA (templateUrl | template ) (COMMA styleUrls)? CLOSE_BRACE ;
 directiveConfig: OPEN_BRACE selector CLOSE_BRACE ;
 injectableConfig: OPEN_BRACE PROVIDEDIN COLON (PROVIDED_IN_ROOT | PROVIDED_IN_PLATFORM | PROVIDED_IN_ANY | SingleLineString) CLOSE_BRACE ;
 
 selector: SELECTOR COLON SingleLineString ;
+imports : IMPORTS COLON OPEN_SQUARE COMMONMODULE CLOSE_SQUARE;
 templateUrl: TEMPLATEURL COLON SingleLineString ;
 template: TEMPLATE COLON SingleLineString ;
 styleUrls: STYLES COLON array ;
+
 
 map: OPEN_BRACE (((ID) COLON value) COMMA?)* CLOSE_BRACE ;
 
 value: subValue | array | B_C html B_C;
 array: OPEN_SQUARE (subValue COMMA?)* CLOSE_SQUARE ;
 
-subValue: SingleLineString | ID | DECIMEL | B_C cssCode+ B_C ;
+subValue: SingleLineString | ID | DECIMEL | B_C cssCode+ B_C | objectInArray+ ;
 
 
 variable: (LET | VAR | CONST)? (PRIVATE | PUBLIC)? ID (COLON (DATATYPE_ | vv | OPEN_SQUARE (dd COMMA?)* CLOSE_SQUARE) (OPEN_SQUARE CLOSE_SQUARE)?)? EQUAL variableValue SIME;
@@ -96,3 +98,11 @@ cssInner: cssKey COLON (ID | (NUMBER PX?)+ | (NUMBER HUN) | callFun) SIME? ;
 
 enum: ENUM sy OPEN_BRACE (ID COMMA?)* CLOSE_BRACE ;
 interfaceCode: INTERFACE sy OPEN_BRACE (ID COLON (DATATYPE_ | vv) SIME)* CLOSE_BRACE ;
+
+
+//objectInArray : OPEN_BRACE (ID COLON (SingleLineString|NUMBER) COMMA?)* CLOSE_BRACE ;
+objectInArray  : OPEN_BRACE property (COMMA property)* CLOSE_BRACE ;
+
+property : ID COLON valueOfProperty;
+
+valueOfProperty : SingleLineString | NUMBER ;

@@ -11,12 +11,11 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://D:/downloads/telegram/antlr-4.13.2-complete.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../compiler/antlr-4.13.2-complete.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="antlr-4.13.1-complete" level="project" />
   </component>
 </module>

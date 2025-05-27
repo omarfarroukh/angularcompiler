@@ -1,4 +1,4 @@
-// Generated from C:/Users/owais/Desktop/Code/Code/AngularCompiler/src/Antlr/AngParser.g4 by ANTLR 4.13.2
+// Generated from D:/University 4th/compiler/lastGit2/angularCompilerTest/src/Antlr/AngParser.g4 by ANTLR 4.13.2
 package Antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -120,6 +120,18 @@ public class AngParserBaseListener implements AngParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSelector(AngParser.SelectorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterImports(AngParser.ImportsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitImports(AngParser.ImportsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -600,6 +612,42 @@ public class AngParserBaseListener implements AngParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitInterfaceCode(AngParser.InterfaceCodeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterObjectInArray(AngParser.ObjectInArrayContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitObjectInArray(AngParser.ObjectInArrayContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterProperty(AngParser.PropertyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitProperty(AngParser.PropertyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterValueOfProperty(AngParser.ValueOfPropertyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitValueOfProperty(AngParser.ValueOfPropertyContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

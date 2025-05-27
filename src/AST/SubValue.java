@@ -10,6 +10,16 @@ public class SubValue extends ASTNode {
     public Integer decimal;
     public List<cssCode> cssCode;
 
+    public List<ObjectInArray> objectInArray;
+
+    public List<ObjectInArray> getObjectInArray() {
+        return objectInArray;
+    }
+
+    public void setObjectInArray(List<ObjectInArray> objectInArray) {
+        this.objectInArray = objectInArray;
+    }
+
     public SubValue() {
         super("subValue");
     }
@@ -63,8 +73,28 @@ public class SubValue extends ASTNode {
             stringBuilder.append("]");
         }
         stringBuilder.append("}");
-        return stringBuilder.toString();
-    }
+        // إضافة قائمة ObjectInArray إذا كانت موجودة
+        if(objectInArray !=null&&!objectInArray.isEmpty())
+        {
+            stringBuilder.append("objectInArray: [");
+            for (int i = 0; i < objectInArray.size(); i++) {
+                stringBuilder.append(objectInArray.get(i).toString());
+                if (i < objectInArray.size() - 1) {
+                    stringBuilder.append(", ");
+                }
+            }
+            stringBuilder.append("], ");
+        }
 
+        // إزالة الفاصلة الزائدة إذا وجدت
+        if(stringBuilder.charAt(stringBuilder.length()-2)==',')
+        {
+            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+        }
+
+        stringBuilder.append("}");
+        return stringBuilder.toString();
+
+    }
 
 }

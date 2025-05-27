@@ -1,4 +1,4 @@
-// Generated from C:/Users/owais/Desktop/Code/Code/AngularCompiler/src/Antlr/AngParser.g4 by ANTLR 4.13.2
+// Generated from D:/University 4th/compiler/lastGit2/angularCompilerTest/src/Antlr/AngParser.g4 by ANTLR 4.13.2
 package Antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -97,6 +97,16 @@ public interface AngParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSelector(AngParser.SelectorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngParser#imports}.
+	 * @param ctx the parse tree
+	 */
+	void enterImports(AngParser.ImportsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngParser#imports}.
+	 * @param ctx the parse tree
+	 */
+	void exitImports(AngParser.ImportsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AngParser#templateUrl}.
 	 * @param ctx the parse tree
@@ -497,4 +507,34 @@ public interface AngParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitInterfaceCode(AngParser.InterfaceCodeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngParser#objectInArray}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjectInArray(AngParser.ObjectInArrayContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngParser#objectInArray}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjectInArray(AngParser.ObjectInArrayContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterProperty(AngParser.PropertyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitProperty(AngParser.PropertyContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AngParser#valueOfProperty}.
+	 * @param ctx the parse tree
+	 */
+	void enterValueOfProperty(AngParser.ValueOfPropertyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AngParser#valueOfProperty}.
+	 * @param ctx the parse tree
+	 */
+	void exitValueOfProperty(AngParser.ValueOfPropertyContext ctx);
 }

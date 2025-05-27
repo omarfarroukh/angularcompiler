@@ -1,4 +1,4 @@
-// Generated from C:/Users/owais/Desktop/Code/Code/AngularCompiler/src/Antlr/AngParser.g4 by ANTLR 4.13.2
+// Generated from D:/University 4th/compiler/lastGit2/angularCompilerTest/src/Antlr/AngParser.g4 by ANTLR 4.13.2
 package Antlr;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -75,6 +75,13 @@ public class AngParserBaseVisitor<T> extends AbstractParseTreeVisitor<T> impleme
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitSelector(AngParser.SelectorContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitImports(AngParser.ImportsContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -355,4 +362,25 @@ public class AngParserBaseVisitor<T> extends AbstractParseTreeVisitor<T> impleme
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitInterfaceCode(AngParser.InterfaceCodeContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitObjectInArray(AngParser.ObjectInArrayContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitProperty(AngParser.PropertyContext ctx) { return visitChildren(ctx); }
+	/**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+	@Override public Object visitValueOfProperty(AngParser.ValueOfPropertyContext ctx) { return visitChildren(ctx); }
 }

@@ -1,0 +1,86 @@
+
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { FormsModule } from "@angular/forms";
+
+import { AppComponent } from "./app.component";
+import { ExampleComponent } from "./example/example.component";
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    ExampleComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  template1: `<div className="container mt-3">
+                  <div className="row">
+                    <div className="col-md-4">
+                      {products.map((product) => (
+                        <div *key={product.id} className="mb-3">
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="img-fluid"
+                            onClick={handleClick}
+                          />
+                          <p>{product.name}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="col-md-8">
+                      {selectedProduct && (
+                        <div>
+                          <img id="imgdesc" src={selectedProduct.image} alt={selectedProduct.name} className="img-fluid mb-3" />
+                          <h3>{selectedProduct.name}</h3>
+                          <p>{selectedProduct.description}</p>
+                          <ul>
+                            {selectedProduct.features.map((feature, index) => (
+                              <li key={index}>{feature}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>`,
+  providers: [],
+  styles: [
+      `
+        .recently-viewed {
+          background-color: white;
+          padding: 15px;
+          border-radius: 8px;
+          text-align: center;
+        }
+
+        .recently-viewed img {
+          width: 100%;
+          border-radius: 8px;
+        }
+      `
+    ],
+  bootstrap: [AppComponent],
+})
+export class ProfilePhoto {
+
+
+    constructor(private renderer: Renderer2, private el: ElementRef) {
+        super(id , name);
+    }
+
+    let name: string = "mk";
+        name = "Angular Framework";
+
+      addHtml() {
+        const container: [number , string] = this.el.nativeElement.querySelector("#container");
+        const container10 = new User("dsdsd");
+        const paragraph = this.renderer.createElement("p");
+        let greet = (name: string): string => "Hello, ${ds}" ;
+        const text = this.renderer.createText("This is programmatically added HTML!").createText(() => {});
+        container10.display();
+        this.renderer.appendChild(paragraph, text);
+        this.renderer.appendChild(container, paragraph);
+      }
+}
